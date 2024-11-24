@@ -1,16 +1,17 @@
 import { getCSS, tickConfig } from "./common.js"
 
-async function quantidadeUsuariosPorRede() {
-    const url = 'https://raw.githubusercontent.com/silviosnjr/CienciaDeDados-CriandoGraficosDinamicosComJavaScript/refs/heads/Aula01/educacao/educacao-etapas-de-ensino.json'
-    const res = await fetch(url)
-    const dados = await res.json()
+async function quantidadeUsuarios() {
+    const url = 'https://raw.githubusercontent.com/silviosnjr/CienciaDeDados-CriandoGraficosDinamicosComJavaScript/refs/heads/Aula01/trabalho/trabalho-tipos-de-ocupacao.json'
+    const rest = await fetch(url)
+    const dados = await rest.json()
+
     const nomeDasRedes = Object.keys(dados)
-    const quantidadeDeUsuarios = Object.values(dados)
+    const quantidadeUsuarios= Object.values(dados)
 
     const data = [
         {
-            x: nomeDasRedes, 
-            y: quantidadeDeUsuarios, 
+            x: nomeDasRedes,
+            y: quantidadeUsuarios,
             type: 'bar',
             marker: {
                 color: getCSS('--primary-color')
@@ -18,42 +19,44 @@ async function quantidadeUsuariosPorRede() {
         }
     ]
 
-    const laytout = {
+    const layout = {
         plot_bgcolor: getCSS('--bg-color'),
         paper_bgcolor: getCSS('--bg-color'),
         title: {
-            text: 'Redes sociais com mais usuários',
+            text: "Distribuição dos trabalhadores nos diversos setores da economia",
             x: 0,
             font: {
                 color: getCSS('--primary-color'),
+                family: getCSS('--font'),
                 size: 30,
-                font: getCSS('--font')
             }
         },
         xaxis: {
             tickfont: tickConfig,
             title: {
-                text: 'Etapas de ensino',
+                text: "Ocupação",
                 font: {
-                    color: getCSS('--secondary-color')
+                    color: getCSS('--primary-color'),
+                    size: 20,
                 }
             }
         },
         yaxis: {
             tickfont: tickConfig,
             title: {
-                text: 'Bilhões de estudantes',
+                text: "Trabalhadores",
                 font: {
-                    color: getCSS('--secondary-color')
+                    color: getCSS('--primary-color'),
+                    size: 20,
                 }
             }
         }
     }
-
+    
     const grafico = document.createElement('div')
     grafico.className = 'grafico'
     document.getElementById('graficos-container').appendChild(grafico)
-    Plotly.newPlot(grafico, data, laytout)
+    Plotly.newPlot(grafico, data, layout)
 }
-
-quantidadeUsuariosPorRede()
+ 
+quantidadeUsuarios()
